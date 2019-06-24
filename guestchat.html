@@ -1,28 +1,50 @@
 <!DOCTYPE html>
-<p>Co-Browse test page</p>
+<p>GuestChat/WebChat test page</p>
 
 	<ul>
 		<li> <a href="index.html">Genesys Test Site Home Page</a> </li>
 	</ul>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Simple co-browse with chat example</title>
+    <title>Simple GuestChat/WebChat Example</title>
 </head>
 <body>
 
-    <h1>Simple co-browse with chat example</h1>
+    <h1>Simple GuestChat/WebChat Example</h1>
     <form>
         <label for="firstName">First Name</label>
         <input type="text" id="firstName" size="20" value="Joe" />
 
         <label for="lastName">Last Name</label>
         <input type="text" id="lastName" size="20" value="Customer" />
-
-        <label for="agentEmail">Agent Email</label>
-        <input type="text" id="agentEmail" size="20" value="eps@gensys.com" />
-
+		
+	<br>
+        <label for="agentAddress">Address</label>
+        <input type="text" id="agentAddress" size="20" value="7601 Interactive Way" />
+		
+        <label for="agentCity">City</label>
+        <input type="text" id="agentCity" size="10" value="Indianapolis" />
+		
+        <label for="agentState">State</label>
+        <input type="text" id="agentState" size="5" value="IN" />
+		
+        <label for="agentZIP">ZIP</label>
+        <input type="text" id="agentZIP" size="5" value="46278" />
+	</br>		
+        <label for="agentPhone">Phone</label>
+		<input type="text" id="agentPhone" size="20" value="5558675309" />
+		
+		<label for="agentLocale">Locale</label>
+        <input type="text" id="agentLocale" size="5" value="en" />
+		
+		<label for="agentWelcomeMessage">Welcome Message</label>
+        <input type="text" id="agentWelcomeMessage" size="40" value="Thanks for chatting using the dev tools chat page." />
+		
+		<!--label for="agentSubject">Subject</label>
+        <input type="text" id="agentSubject" size="40" value="Subject" /-->
+	<br>
         <button type="button" id="start-chat" onclick="genesysWebchat.startEmbeddedChat()">Start Embedded Chat</button>
-
+	</br>
     </form>
     <div id="chatContainer" style="height:600px"></div>
 
@@ -35,7 +57,7 @@
   src="https://apps.mypurecloud.com/webchat/jsapi-v1.js"
   region="us-east-1"
   org-guid="cc329c9f-a78c-4788-8808-6fdf739234f7"
-  deployment-key="25c5bf4a-e202-4c19-bf57-87800b456975"
+  deployment-key="986fa56f-9920-441a-b51a-c3a55b658791"
 ></script>
 <!-- deployment-key above is for general chat deployment-key NOT the deployment-key for co-browse -->
 	  
@@ -44,7 +66,14 @@
         function createChatConfig(){
             let firstName = document.getElementById('firstName').value;
             let lastName = document.getElementById('lastName').value;
-            let agentEmail = document.getElementById('agentEmail').value;
+            let agentAddress = document.getElementById('agentAddress').value;
+			let agentCity = document.getElementById('agentCity').value;
+			let agentState = document.getElementById('agentState').value;
+            let agentZIP = document.getElementById('agentZIP').value;
+            let agentPhone = document.getElementById('agentPhone').value;
+            let agentLocale = document.getElementById('agentLocale').value;
+            let agentWelcomeMessage = document.getElementById('agentWelcomeMessage').value;
+            //let agentSubject = document.getElementById('agentSubject').value;
 
             // For additional web chat config options, see web chat documentation. This example excludes some of the optional values.
             return {
@@ -130,7 +159,7 @@
         }
     })();
     </script>
-	
+
 <script>
   (function(a,t,c,l,o,u,d){a['_genesysJourneySdk']=o;a[o]=a[o]||function(){
   (a[o].q=a[o].q||[]).push(arguments)},a[o].l=1*new Date();u=t.createElement(c),
