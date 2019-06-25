@@ -30,7 +30,10 @@
 		
         <label for="agentZIP">ZIP</label>
         <input type="text" id="agentZIP" size="5" value="46278" />
-	</br>		
+	
+	</br>
+	<br>
+	
         <label for="agentPhone">Phone</label>
 		<input type="text" id="agentPhone" size="20" value="5558675309" />
 		
@@ -40,8 +43,46 @@
 		<label for="agentWelcomeMessage">Welcome Message</label>
         <input type="text" id="agentWelcomeMessage" size="40" value="Thanks for chatting using the dev tools chat page." />
 		
-		<!--label for="agentSubject">Subject</label>
-        <input type="text" id="agentSubject" size="40" value="Subject" /-->
+	</br>		
+	<br>
+	
+		<label for="agentCustomField1Label">customField1Label</label>
+        <input type="text" id="agentCustomField1Label" size="40" value="Label1" />
+		
+		<label for="agentCustomField1">customField1</label>
+        <input type="text" id="agentCustomField1" size="40" value="Field1" />
+
+	</br>
+	<br>
+	
+		<label for="agentCustomField2Label">customField2Label</label>
+        <input type="text" id="agentCustomField2Label" size="40" value="Label2" />
+		
+		<label for="agentCustomField2">customField2</label>
+        <input type="text" id="agentCustomField2" size="40" value="Field2" />
+	
+	</br>
+	<br>
+	
+		<label for="agentCustomField3Label">customField3Label</label>
+        <input type="text" id="agentCustomField3Label" size="40" value="Label3" />
+		
+		<label for="agentCustomField3">customField3</label>
+        <input type="text" id="agentCustomField3" size="40" value="Field3" />
+	
+	</br>
+	<br>	
+	
+		<label for="agentEmail">Email</label>
+        <input type="text" id="agentEmail" size="40" value="eps@genesys.com" />
+		
+		<label for="agentAttributeName">attributeName</label>
+        <input type="text" id="agentAttributeName" size="40" value="attributeName" />
+		
+		<label for="agentAttributeValue">attributeValue</label>
+        <input type="text" id="agentAttributeValue" size="40" value="attributeValue" />
+	
+	</br>
 	<br>
         <button type="button" id="start-chat" onclick="genesysWebchat.startEmbeddedChat()">Start Embedded Chat</button>
 	</br>
@@ -73,7 +114,15 @@
             let agentPhone = document.getElementById('agentPhone').value;
             let agentLocale = document.getElementById('agentLocale').value;
             let agentWelcomeMessage = document.getElementById('agentWelcomeMessage').value;
-            //let agentSubject = document.getElementById('agentSubject').value;
+			let agentCustomField1Label = document.getElementById('agentCustomField1Label').value;
+			let agentCustomField1 = document.getElementById('agentCustomField1').value;
+			let agentCustomField2Label = document.getElementById('agentCustomField2Label').value;
+			let agentCustomField2 = document.getElementById('agentCustomField2').value;
+			let agentCustomField3Label = document.getElementById('agentCustomField3Label').value;
+			let agentCustomField3 = document.getElementById('agentCustomField3').value;
+			let agentEmail = document.getElementById('agentEmail').value;
+			let agentAttributeName = document.getElementById('agentAttributeName').value;
+			let agentAttributeValue = document.getElementById('agentAttributeValue').value;
 
             // For additional web chat config options, see web chat documentation. This example excludes some of the optional values.
             return {
