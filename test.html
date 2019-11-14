@@ -1,0 +1,241 @@
+<!-- Genesys Search App -->
+<!-- test -->
+<html>
+        <head>
+            <title>IWH Genesys Search App</title>
+            <link rel="stylesheet" href="css/skeleton.css">
+            <link rel="stylesheet" href="css/normalize.css">
+            <link rel="stylesheet" href="css/global.css">
+            <link href="https://fonts.googleapis.com/css?family=Lato:400,900&display=swap" rel="stylesheet">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://sdk-cdn.mypurecloud.com/javascript/27.0.0/purecloud-platform-client-v2.min.js"></script>
+        </head>
+        <body>
+            <div class="container">
+                <h1 class="dark-text">Welcome to IWH Genesys Search</h1>
+                <p class="text-light">Use this to search for an email.</p>
+                <div class="row">
+                    <div class="seven columns">
+                    <label class="dark-text" for="searchTerm">Search Term</label>
+                    <input type="text" name="searchTerm" class="u-full-width" id="searchTerm">
+                </div>
+            </div>
+            <div class="row">
+                <div class="four columns">
+                    <button class="" id="submit">Search</button>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="seven columns">
+                <label class="dark-text" for="result">Result</label>
+                <textarea name="result" class="u-full-width" id="result"></textarea>
+            </div>
+        </body>
+
+        <script type="text/javascript">
+            // This client ID expects the redirect URL to be http://localhost:8080/
+            const clientId = 'f5bf0293-170d-4d24-821c-78f40c49c05a';
+            const redirectUri = "https://gagedecker.github.io/test.html";
+    
+            // Set purecloud objects
+            const platformClient = require('platformClient');
+            const client = platformClient.ApiClient.instance;
+            const analyticsapi = new platformClient.AnalyticsApi();
+    
+            // Set PureCloud settings
+            client.setEnvironment('mypurecloud.com');
+            client.setPersistSettings(true, 'test_app');
+
+            /* Subject Query */
+            // $("#submit").click(function() {
+            //     var term = $("#searchTerm").val();
+            //     console.log(term);
+            //     // Authenticate with PureCloud
+            //     client.loginImplicitGrant(clientId, redirectUri)
+            //         .then(() => {
+            //             console.log('Logged in');
+    
+            //             let query = {
+            //             interval : "2019-10-18T00:00:00.000Z/2019-10-19T00:00:00.000Z",
+            //             segmentFilters: [
+            //                     {
+            //                     type: "or",
+            //                     predicates: [
+            //                         {
+            //                         dimension: "subject",
+            //                         value: term
+            //                         }
+            //                     ]
+            //                     }
+            //                 ]
+            //             };
+            //             return analyticsapi.postAnalyticsConversationsDetailsQuery(query);
+            //         })
+            //         .then((queryResult) => {
+            //             // Display analytics results
+            //             console.log('queryResult: ', queryResult);
+            //             $('#results').text(JSON.stringify(queryResult, null, 2));
+            //         })
+            //         .catch((err) => console.error(err));
+            // });
+
+            /* Wrap-Up Note Query */
+            // $("#submit").click(function() {
+            //     var term = $("#searchTerm").val();
+            //     console.log(term);
+            //     // Authenticate with PureCloud
+            //     client.loginImplicitGrant(clientId, redirectUri)
+            //         .then(() => {
+            //             console.log('Logged in');
+    
+            //             let query = {
+            //             interval : "2019-10-18T00:00:00.000Z/2019-10-19T00:00:00.000Z",
+            //             segmentFilters: [
+            //                     {
+            //                     type: "or",
+            //                     predicates: [
+            //                         {
+            //                         dimension: "wrapUpNote",
+            //                         value: term
+            //                         }
+            //                     ]
+            //                     }
+            //                 ]
+            //             };
+            //             return analyticsapi.postAnalyticsConversationsDetailsQuery(query);
+            //         })
+            //         .then((queryResult) => {
+            //             // Display analytics results
+            //             console.log('queryResult: ', queryResult);
+            //             $('#results').text(JSON.stringify(queryResult, null, 2));
+            //         })
+            //         .catch((err) => console.error(err));
+            // });
+
+            function getParameterByName(name) {
+                name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                var regex = new RegExp("[\\#&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.hash);
+                return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+
+            if(window.location.hash) {
+                console.log(location.hash);
+                var token = getParameterByName('access_token');
+
+                location.hash=''
+
+            } else {
+                var queryStringData = {
+                    response_type : "token",
+                    client_id : "f5bf0293-170d-4d24-821c-78f40c49c05a",
+                    redirect_uri : "https://gagedecker.github.io/test.html"
+                }
+
+                window.location.replace("https://login.mypurecloud.com/oauth/authorize?" + jQuery.param(queryStringData));
+            }
+
+            /* Body Query */
+            $("#submit").click(function() {
+                var term = $("#searchTerm").val();
+                var convoIds = [];
+                var messageIds = [];
+
+                console.log(term);
+                // Authenticate with PureCloud
+                client.loginImplicitGrant(clientId, redirectUri)
+                    .then(() => {
+                        console.log('Logged in');
+    
+                        let query = {
+                        interval : "2019-10-18T00:00:00.000Z/2019-10-19T00:00:00.000Z"
+                        };
+                        return analyticsapi.postAnalyticsConversationsDetailsQuery(query);
+                    })
+                    .then((queryResult) => {
+                        
+                        // Display analytics results
+                        console.log(queryResult['conversations'][0]['conversationId']);
+                        var i = 0;
+                        $(queryResult['conversations']).each(function(){
+                            convoIds.push(queryResult['conversations'][i]['conversationId']);
+                            i++;
+                        });
+                        console.log(convoIds.toString());
+                        // $("textarea#result").text(JSON.stringify(queryResult));
+
+                        console.log(convoIds.length);
+                        console.log("Test");
+
+                        // i = 0;
+                        // $(convoIds).each(function(){
+                        //     $.ajax({
+                        //         url: "https://api.mypurecloud.com/api/v2/conversations/emails/" + convoIds[i] + "/messages",
+                        //         type: "GET",
+                        //         beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bearer ' + token);},
+                        //         success: function(data) {
+                        //             $("textarea#result").text(JSON.stringify(data));
+
+                        //             j = 0;
+                        //             $(data['entities']).each(function(){
+                        //                 // console.log(data['entities'][j]);
+                        //                 messageIds.push(data['entities'][j]['id']);
+                        //                 j++;
+                        //                 // console.log(messageIds['id'][i]);
+                        //             });
+                        //         }
+                        //     });
+                        //     console.log(messageIds[i]);
+                        //     i++;
+                        // })
+                        // console.log(messageIds.toString());
+                    })
+                    
+                    .catch((err) => console.error(err));
+                    
+                        
+                    
+                            // $.ajax({
+                            //     url: "https://api.mypurecloud.com/api/v2/timezones",
+                            //     type: "GET",
+                            //     beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bearer ' + token);},
+                            //     success: function(data) {
+                            //         $("textarea#result").text(JSON.stringify(data));
+                            //     }
+                            // });
+            });
+    
+            // Gets an ISO-8601 interval from now for the last 7 days
+            // function getIntervalString() {
+            //     let end = new Date();
+            //     let start = new Date();
+            //     start.setDate(end.getDate() - 7);
+    
+            //     return start.toISOString() + '/' + end.toISOString();
+            // }
+        </script>
+
+        <!-- To be referenced, old script for OAuth -->
+        <!-- <script type="text/javascript">
+
+        
+
+        $( "#submit" ).click(function() {
+
+            $.ajax({
+                url: "https://api.mypurecloud.com/api/v2/timezones",
+                type: "GET",
+                beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bearer ' + token);},
+                success: function(data) {
+                    $("textarea#result").text(JSON.stringify(data));
+                }
+            });
+
+            var term = $("#searchTerm").val();
+            $("textarea#result").text(term);
+        });
+
+
+        </script> -->
+</html>

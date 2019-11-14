@@ -1,0 +1,116 @@
+.dark-text {
+    color: #484848;
+}
+
+.card-box {
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.bg-light {
+    background-color: #f3f3f3 !important;
+}
+
+.p-2 {
+    padding: 2em;
+}
+
+.my-2 {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.mb-4 {
+    margin-bottom: 4em;
+}
+
+.float-right {
+    float: right;
+}
+
+.text-light {
+    color: #6c757d;
+}
+
+.nav-img {
+    max-width: 80px;
+}
+
+.nav-text {
+    font-weight: 900;
+    font-size: 1.2em;
+    letter-spacing: .5px;
+    padding-left: 10px;
+    border-left: 1px solid #00b7d0;
+}
+
+#nav {
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+.top-helper-text {
+    background-color: #14ab6a;
+    color: #ffffff;
+    margin: 0 -10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.mb-0 {
+    margin-bottom: 0px;
+}
+
+.overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2000;
+    background-color:rgba(255,255,255, 1);
+    transition: width 2s, height 4s;
+}
+.password {
+    display: block;
+    width: 40vw;
+    height: 8vh!important;
+    position: fixed;
+    top: 45vh;
+    left: 25vw;
+    border: 0;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 0 0 0.1vw rgba(68, 203, 255, 0.7), 0 0 0 0 rgba(199, 21, 133, 1);
+    font-size: 3vh;
+    font-weight: 100;
+    line-height: 4vh;
+    text-align: center;
+}
+.password:focus {
+    transition: box-shadow 550ms ease;
+    box-shadow: 0 0 0 0.2vw rgba(68, 203, 255, 0.7), 0 0 0 4vw rgba(199, 21, 133, 0);
+}
+/* 
+.submit-button {
+    height: none!important;
+    line-height: none!important;
+    padding: 10px 50px!important;
+    color: #555!important;
+    text-align: center!important;
+    font-size: 18px!important;
+    font-weight: 600!important;
+} */
+
+/* input, select, textarea {
+    border-radius: 5px !important;
+    padding: 0.75rem 0.75rem !important;
+    margin: .5em auto;
+    resize: none;
+    font-size: 1rem;
+    line-height: 1.6;
+} */
