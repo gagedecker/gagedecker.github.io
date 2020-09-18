@@ -10,125 +10,83 @@
 </head>
 <body>
 
-    <h1>Simple co-browse with chat example</h1>
-    <form>
-        <label for="firstName">First Name</label>
-        <input type="text" id="firstName" size="20" value="Joe" />
+    <h1>Simple co-browse with chat example where a new window will pop up</h1>
 
-        <label for="lastName">Last Name</label>
-        <input type="text" id="lastName" size="20" value="Customer" />
-
-        <label for="agentEmail">Agent Email</label>
-        <input type="text" id="agentEmail" size="20" value="eps@gensys.com" />
-
-        <button type="button" id="start-chat" onclick="genesysWebchat.startEmbeddedChat()">Start Embedded Chat</button>
-
-    </form>
     <div id="chatContainer" style="height:600px"></div>
 
     <!-- Replace mypurecloud.com with the hostname for your PureCloud region -->
     <script src="https://apps.mypurecloud.com/webchat/jsapi-v1.js" type="text/javascript"></script>
 	
-	<script
+<script
   id="purecloud-webchat-js"
   type="text/javascript"
   src="https://apps.mypurecloud.com/webchat/jsapi-v1.js"
   region="us-east-1"
   org-guid="cc329c9f-a78c-4788-8808-6fdf739234f7"
-  deployment-key="25c5bf4a-e202-4c19-bf57-87800b456975"
+  deployment-key="4869cac8-3e7c-419e-be70-1c75ec0ff82a"
 ></script>
 <!-- deployment-key above is for general chat deployment-key NOT the deployment-key for co-browse -->
 	  
     <script type="text/javascript">
-    let genesysWebchat = (function() {
-        function createChatConfig(){
-            let firstName = document.getElementById('firstName').value;
-            let lastName = document.getElementById('lastName').value;
-            let agentEmail = document.getElementById('agentEmail').value;
+let chatConfig = {
+  "webchatAppUrl": "https://apps.mypurecloud.com/webchat",
+  "webchatServiceUrl": "https://realtime.mypurecloud.com:443",
+  "orgId": "15389",
+  "orgGuid": "cc329c9f-a78c-4788-8808-6fdf739234f7",
+  "orgName": "pcps",
+  "queueName": "Decker Chat Queue",
+  "logLevel": "DEBUG",
+  "locale": "en",
+  "data": {
+    "firstName": "Joe",
+    "lastName": "Customer",
+    "addressStreet": "ABC Street",
+    "addressCity": "New York",
+    "addressPostalCode": "10000",
+    "addressState": "NY",
+    "phoneNumber": "5558675309",
+    "customField1Label": "",
+    "customField1": "",
+    "customField2Label": "",
+    "customField2": "",
+    "customField3Label": "",
+    "customField3": ""
+  },
+  "companyLogo": {
+    "width": 600,
+    "height": 149,
+    "url": "https://d3a63qt71m2kua.cloudfront.net/developer-tools/1780/assets/images/PC-blue-nomark.png"
+  },
+  "companyLogoSmall": {
+    "width": 25,
+    "height": 25,
+    "url": "https://d3a63qt71m2kua.cloudfront.net/developer-tools/1780/assets/images/companylogo.png"
+  },
+  "agentAvatar": {
+    "width": 462,
+    "height": 462,
+    "url": "https://d3a63qt71m2kua.cloudfront.net/developer-tools/1780/assets/images/agent.jpg"
+  },
+  "welcomeMessage": "Thanks for chatting using version 1.0.",
+  "cssClass": "webchat-frame",
+  "css": {
+    "width": "100%",
+    "height": "100%"
+  }
+};
 
-            // For additional web chat config options, see web chat documentation. This example excludes some of the optional values.
-            return {
-                // Web chat application URL
-                "webchatAppUrl": "https://apps.mypurecloud.com/webchat",
+ININ.webchat.create(chatConfig, function(err, webchat) {
+    if (err) {
+        console.error(err);
+        throw err;
+    }
 
-                // Web chat service URL
-                "webchatServiceUrl": "https://realtime.mypurecloud.com:443",
-
-                // Numeric organization ID
-                "orgId": 12570,
-
-                // Organization name
-                "orgName": "pcps",
-
-                // Target agent email (OPTIONAL)
-                //"agentEmail": agentEmail,
-
-                // Queue Name
-                queueName : 'Decker Chat Queue',
-
-                // Log level
-                "logLevel": "DEBUG",
-
-                // Locale code
-                "locale": "en",
-                // Logo used at the top of the chat window
-                "companyLogo": {
-                    "width": 600,
-                    "height": 149,
-                    "url": "https://d3a63qt71m2kua.cloudfront.net/developer-tools/1275/assets/images/PC-blue-nomark.png"
-                },
-
-                // Logo used within the chat window
-                "companyLogoSmall": {
-                    "width": 149,
-                    "height": 149,
-                    "url": "https://d3a63qt71m2kua.cloudfront.net/developer-tools/1275/assets/images/companylogo.png"
-                },
-
-                // Image used for agent
-                "agentAvatar": {
-                    "width": 462,
-                    "height": 462,
-                    "url": "https://d3a63qt71m2kua.cloudfront.net/developer-tools/1275/assets/images/agent.jpg"
-                },
-
-                // Text displayed when the chat window opens
-                "welcomeMessage": "Thanks for chatting.",
-
-                // CSS class applied to the chat window
-                "cssClass": "webchat-frame",
-
-                // Custom style applied to the chat window
-                "css": {
-                    "width": "100%",
-                    "height": "100%"
-                },
-
-                // Deployment key for your cobrowse deployment from PureCloud admin UI
-                "cobrowseConfig": {
-                    "deploymentKey": "9pmBN69dWXOxA5rjIv19WNid3lJStO2j",
-                }
-				//deployment-key above is for co-browse deployment-key NOT the deployment-key for general chat
-            };
-        }
-        return {
-            startEmbeddedChat: function() {
-                let chatConfig = createChatConfig();
-                ININ.webchat.create(chatConfig, function(err, webchat) {
-                    if (err) {
-                        console.error('Unable to share page', (err.stack || err));
-                        return;
-                    }
-
-                    //Render to frame
-                    webchat.renderFrame({
-                        containerEl: 'chatContainer'
-                    });
-
-                });
-            }
-        }
-    })();
+    webchat.renderPopup({
+        width: 400,
+        height: 400,
+        title: 'Chat'
+    });
+});
     </script>
 	
 <script>
